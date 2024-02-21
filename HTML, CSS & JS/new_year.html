@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year Countdown</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: blue;
+            color: #fff;
+        }
+
+        #countdown {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        #fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="fireworks"></div>
+    <div id="countdown"></div>
+
+    <script>
+        // Countdown function
+        function countdown() {
+            var endDate = new Date('December 12, 2024 03:28:00').getTime();
+
+            var x = setInterval(function () {
+                var now = new Date().getTime();
+                var distance = endDate - now;
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').innerHTML =
+                    days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById('countdown').innerHTML = 'Happy New Year!<br>2024';
+                }
+            }, 1000);
+        }
+
+        countdown();
+
+        // Fireworks animation
+        function createFireworks() {
+            var container = document.getElementById('fireworks');
+
+            for (var i = 0; i < 10; i++) {
+                var firework = document.createElement('div');
+                firework.className = 'firework';
+                container.appendChild(firework);
+
+                animateFirework(firework);
+            }
+        }
+
+        function animateFirework(firework) {
+            var colors = ['#ffcc00', '#ff6600', '#ff3300', '#ff0000', '#cc0000', '#990000'];
+
+            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            firework.style.width = Math.random() * 8 + 'px';
+            firework.style.height = Math.random() * 8 + 'px';
+            firework.style.left = Math.random() * window.innerWidth + 'px';
+            firework.style.animationDuration = Math.random() * 2 + 1 + 's';
+            firework.style.animationDelay = Math.random() * 2 + 's';
+
+            firework.addEventListener('animationiteration', function () {
+                firework.style.left = Math.random() * window.innerWidth + 'px';
+                firework.style.animationDuration = Math.random() * 2 + 1 + 's';
+                firework.style.animationDelay = Math.random() * 2 + 's';
+            });
+        }
+
+        createFireworks();
+    </script>
+</body>
+
+</html>
